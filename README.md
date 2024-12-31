@@ -1,3 +1,8 @@
+# problem
+youtube: You want to fetch data from a YouTube playlist, display it on the frontend, and provide play/pause functionality in a file named video.dart.
+
+firebase: You want to create separate collections in Firebase for each singer's name, push audio files into those collections, fetch the data, display it on the frontend, and provide play/pause functionality.
+
 # radio
 
 A new Flutter project.
