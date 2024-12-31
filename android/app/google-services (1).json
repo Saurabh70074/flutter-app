@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "780881688366",
+    "project_id": "mussic-39ba3",
+    "storage_bucket": "mussic-39ba3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:780881688366:android:1a1c7b500327613e286cbf",
+        "android_client_info": {
+          "package_name": "com.example.radio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOHQjzHywF-f96dHJfiKh77RSD8Njt0Qo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
