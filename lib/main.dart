@@ -9,34 +9,21 @@ import 'video.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-/// The main entry point of the application.
-/// 
-/// This function initializes the Flutter binding and Firebase app,
-/// and then runs the application. It handles the initialization of
-/// Firebase differently for web and non-web platforms.
 void main() async {
-  // Ensure that widget binding is initialized before using any Flutter features
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Check if the platform is web
   if (kIsWeb) {
-    // Initialize Firebase with web-specific options
     await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: "AIzaSyBB0nQp_-D8VAsREPI2OezBo6WT4BFDOQc",
-        authDomain: "mussic-39ba3.firebaseapp.com",
-        projectId: "mussic-39ba3",
-        storageBucket: "mussic-39ba3.firebasestorage.app",
-        messagingSenderId: "780881688366",
-        appId: "1:780881688366:web:cf94db17de550698286cbf",
-      ),
-    );
+        options: const FirebaseOptions(
+            apiKey: "AIzaSyBB0nQp_-D8VAsREPI2OezBo6WT4BFDOQc",
+            authDomain: "mussic-39ba3.firebaseapp.com",
+            projectId: "mussic-39ba3",
+            storageBucket: "mussic-39ba3.firebasestorage.app",
+            messagingSenderId: "780881688366",
+            appId: "1:780881688366:web:cf94db17de550698286cbf"));
   } else {
-    // Initialize Firebase for non-web platforms with default options
     await Firebase.initializeApp();
   }
 
-  // Start the Flutter application by running MyApp
   runApp(const MyApp());
 }
 
@@ -45,13 +32,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Mussic',
-      theme: ThemeData(
-        textTheme: GoogleFonts.openSansTextTheme(),
-      ),
-      home: const VideoIntroPage(),
+      home: VideoIntroPage(),
     );
   }
 }
@@ -60,7 +43,7 @@ class VideoIntroPage extends StatefulWidget {
   const VideoIntroPage({super.key});
 
   @override
-  State<VideoIntroPage> createState() => _VideoIntroPageState();
+  _VideoIntroPageState createState() => _VideoIntroPageState();
 }
 
 class _VideoIntroPageState extends State<VideoIntroPage> {
@@ -83,22 +66,13 @@ class _VideoIntroPageState extends State<VideoIntroPage> {
   }
 
   @override
-  /// Builds the video intro page.
-  ///
-  /// The page displays a logo with a fade-in/fade-out animation.
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // The background color of the page is black.
       backgroundColor: Colors.black,
       body: Center(
         child: AnimatedOpacity(
-          // The opacity of the logo changes from 1.0 (fully visible) to 0.0 (fully transparent)
-          // when the logo is shown or hidden.
           opacity: showLogo ? 1.0 : 0.0,
-          // The animation takes 1 second to complete.
           duration: const Duration(seconds: 1),
-          // The logo is an image asset named "logo.png" with a width of 600 pixels.
           child: Image.asset('assets/logo.png', width: 600),
         ),
       ),
@@ -149,12 +123,6 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
     }
   }
 
-  /// Toggles the like button and shows a snackbar with the like status.
-  ///
-  /// When the like button is clicked, the UI is updated to show the new like
-  /// status and a snackbar is shown with the new like status.
-  ///
-  /// The [isLiked] state is updated to the opposite of its current value.
   void _toggleLike() {
     setState(() {
       isLiked = !isLiked;
@@ -180,22 +148,11 @@ class _SongPlayerPageState extends State<SongPlayerPage> {
   }
 
   @override
-  /// Disposes of the resources used by the song player page.
-  ///
-  /// This method is called when the widget is removed from the tree. It
-  /// disposes of the [AudioPlayer], [ScrollController], [TextEditingController],
-  /// and [FocusNode] objects to free up resources.
-  @override
   void dispose() {
-    // Dispose of the audio player to free up resources.
     _audioPlayer.dispose();
-    // Dispose of the scroll controller to free up resources.
     _scrollController.dispose();
-    // Dispose of the text editing controller to free up resources.
     _commentController.dispose();
-    // Dispose of the focus node to free up resources.
     _commentFocusNode.dispose();
-    // Call the superclass's dispose method to free up any other resources.
     super.dispose();
   }
 

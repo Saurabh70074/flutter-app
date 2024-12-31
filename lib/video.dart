@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'services/api_service.dart';
 import 'models/video_model.dart';
+import 'main.dart';
 import 'schedule.dart';
 import 'profile.dart';
 import 'favourites.dart';
 
 class VideoPage extends StatefulWidget {
-  const VideoPage({Key? key}) : super(key: key);
+  const VideoPage({super.key});
 
   @override
   State<VideoPage> createState() => _VideoPageState();
@@ -15,7 +16,7 @@ class VideoPage extends StatefulWidget {
 
 class _VideoPageState extends State<VideoPage> {
   List<Video> _videos = [];
-  YoutubePlayerController? _playerController;
+  late YoutubePlayerController _playerController;
   bool _isLoading = true;
   int _selectedIndex = 2;
 
@@ -29,7 +30,7 @@ class _VideoPageState extends State<VideoPage> {
     if (index == 0) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const SchedulePage()),
+        MaterialPageRoute(builder: (context) => const SongPlayerPage()),
       );
     } else if (index == 1) {
       Navigator.push(
@@ -57,7 +58,7 @@ class _VideoPageState extends State<VideoPage> {
 
   void _fetchVideos() async {
     try {
-      const playlistId = "PL2ZuPzC06fL3IxwivCpqgHu9UblebIkit";
+      String playlistId = "PL2ZuPzC06fL3IxwivCpqgHu9UblebIkit";
       List<Video> videos = await APIService.instance.fetchVideosFromPlaylist(
         playlistId: playlistId,
       );
@@ -78,18 +79,8 @@ class _VideoPageState extends State<VideoPage> {
   void _initializePlayer(String videoId) {
     _playerController = YoutubePlayerController(
       initialVideoId: videoId,
-      flags: const YoutubePlayerFlags(
-        autoPlay: false,
-        mute: false,
-      ),
+      flags: const YoutubePlayerFlags(autoPlay: false),
     );
-    setState(() {});
-  }
-
-  @override
-  void dispose() {
-    _playerController?.dispose();
-    super.dispose();
   }
 
   @override
@@ -173,14 +164,6 @@ class _VideoPageState extends State<VideoPage> {
                   ),
                 ),
               ),
-              if (_playerController != null)
-                YoutubePlayer(
-                  controller: _playerController!,
-                  showVideoProgressIndicator: true,
-                  onReady: () {
-                    print("Player is ready.");
-                  },
-                ),
               _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : Expanded(
@@ -190,7 +173,9 @@ class _VideoPageState extends State<VideoPage> {
                           Video video = _videos[index];
                           return GestureDetector(
                             onTap: () {
-                              _initializePlayer(video.id);
+                              setState(() {
+                                _initializePlayer(video.id);
+                              });
                             },
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
@@ -205,7 +190,7 @@ class _VideoPageState extends State<VideoPage> {
                                         height: 200,
                                         fit: BoxFit.cover,
                                       ),
-                                      const Positioned(
+                                      Positioned(
                                         bottom: 8,
                                         right: 8,
                                         child: Icon(
